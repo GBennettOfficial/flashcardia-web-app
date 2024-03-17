@@ -1,7 +1,33 @@
 ﻿@page "/"
 
+@inject SignInManager<ApplicationUser> SignInManager
+
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="text-center">
+    <h1>Flashcardia</h1>
+    <blockquote class="blockquote mb-5">
+        know it by heart
+    </blockquote>
+    <p class="mt-2 mb-5">
+        Welcome to Flashcardia, the Best Flashcards App! Whether you’re a serious learner, a student, or a professional, we’ve got you covered.
+    </p>
+    <AuthorizeView>
+        <Authorized>
+            <a class="btn btn-primary m-2" style="width: 65%">Open a Deck</a>
+            <a class="btn btn-danger m-2" style="width: 65%" href="/Account/Logout">Logout</a>
+        </Authorized>
+        <NotAuthorized>
+            <a class="btn btn-success m-2" style="width: 65%" href="/Account/Login">Login</a>
+            <a class="btn btn-primary m-2" style="width: 65%" href="/Account/Register">Register</a>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
 
-Welcome to your new app.
+
+@code {
+    public async Task Logout()
+    {
+        await SignInManager.SignOutAsync();
+    }
+}
