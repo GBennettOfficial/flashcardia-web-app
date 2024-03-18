@@ -1,0 +1,55 @@
+﻿
+@page "/DeckManagement/DeleteDeck/"
+
+@using Flashcardia.Repostories
+@using System.ComponentModel.DataAnnotations
+
+@inject DeckWriter DeckWriter
+@inject NavigationManager NavigationManager
+@inject UserStateProvider UserStateProvider
+
+<div class="text-center">
+    <h1>Delete Deck</h1>
+    <h3>@Input.ConfirmDelete</h3>
+    <hr class="mb-2" />
+    <EditForm Model="Input" method="post" OnValidSubmit="RemoveDeck" FormName="create-deck">
+        <DataAnnotationsValidator />
+        <ValidationSummary class="text-danger" role="alert" />
+        <div class="form-floating mb-3">
+            <InputText @bind-Value="Input.DeckName" class="form-control" />
+            <label for="name">Deck Name</label>
+            <ValidationMessage For="() => Input.DeckName" class="text-danger" />
+        </div>
+        <button type="submit" class="btn btn-danger" style="max-width: 375px;">Delete Deck</button>
+    </EditForm>
+</div>
+
+@code {
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = new();
+
+    private UserState UserState { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        UserState = await UserStateProvider.Get();
+        Input.ConfirmDelete = "DELETE/" + UserState.SelectedDeck!.Name;
+        await base.OnInitializedAsync();
+    }
+
+    private async Task RemoveDeck()
+    {
+        await DeckWriter.Delete(UserState.SelectedDeck!);
+        NavigationManager.NavigateTo("/DeckManagement");
+    }
+
+    private class InputModel
+    {
+        [Compare("ConfirmDelete", ErrorMessage = "the text given does not match")]
+        public string DeckName { get; set; } = string.Empty;
+
+        public string ConfirmDelete { get; set; } = string.Empty;
+
+    }
+}

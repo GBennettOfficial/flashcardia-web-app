@@ -1,4 +1,4 @@
-﻿namespace Flashcardia.Models
+﻿namespace Flashcardia.Repostories
 {
     public class CardListReader
     {
@@ -9,7 +9,7 @@
             _context = context;
         }
 
-        public async Task<IEnumerable<Card>> Get(int deckId)
+        public async Task<ICollection<Card>> Get(int deckId)
         {
             return await _context.Cards
                 .Where(x => x.DeckId == deckId)

@@ -1,0 +1,69 @@
+﻿@page "/DeckManagement/"
+@using Flashcardia.Repostories
+@inject DeckListReader DeckListReader
+@inject UserStateProvider UserStateProvider
+
+<div class="text-center">
+    <h3>Deck Menu</h3>
+    <hr class="mb-2" />
+    @if (Decks?.Any() ?? false)
+    {
+        <ul class="list-group m-5">
+            @foreach (Deck deck in Decks)
+            {
+                if (UserState.SelectedDeck != null && deck.Id.Equals(UserState.SelectedDeck.Id))
+                {
+                    <li class="list-group-item active" @onclick="DeselectDeck">
+                        @deck.Name
+                    </li>
+                }
+                else
+                {
+                    <li class="list-group-item" @onclick="() => SelectDeck(deck)">
+                        @deck.Name
+                    </li>
+                }
+
+            }
+        </ul>
+    }
+    <div class="d-flex flex-column justify-content-center align-items-center">
+        @if (UserState?.SelectedDeck != null)
+        {
+            <a class="btn btn-primary m-2 w-100" style="max-width: 375px;" href="/CardPractice">Open Deck</a>
+            <a class="btn btn-success m-2 w-100" style="max-width: 375px;" href="/DeckManagement/CreateDeck">Create Deck</a>
+            <a class="btn btn-danger m-2 w-100" style="max-width: 375px;" href="/DeckManagement/DeleteDeck">Delete Deck</a>
+        }
+        else
+        {
+            <a class="btn btn-success m-2 w-100" style="max-width: 375px;" href="/DeckManagement/CreateDeck">Create Deck</a>
+        }
+        <a class="btn btn-secondary m-2 w-100" style="max-width: 375px;" href="/">Home</a>
+    </div>
+
+</div>
+
+
+
+@code {
+
+    private UserState UserState { get; set; } = default!;
+
+    private ICollection<Deck>? Decks { get; set; } = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        UserState = await UserStateProvider.Get();
+        Decks = await DeckListReader.Get(UserState.User!.Id);
+    }
+
+    private void SelectDeck(Deck deck)
+    {
+        UserState.SelectedDeck = deck;
+    }
+
+    private void DeselectDeck()
+    {
+        UserState.SelectedDeck = null;
+    }
+}

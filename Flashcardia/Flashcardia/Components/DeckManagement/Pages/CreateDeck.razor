@@ -1,0 +1,51 @@
+﻿
+@page "/DeckManagement/CreateDeck/"
+
+@using Flashcardia.Repostories
+
+@inject DeckWriter DeckWriter
+@inject NavigationManager NavigationManager
+@inject UserStateProvider UserStateProvider
+
+<div class="text-center">
+    <h1>Create Deck</h1>
+    <hr class="mb-2" />
+    <EditForm Model="Input" method="post" OnValidSubmit="AddDeck" FormName="create-deck">
+        <DataAnnotationsValidator />
+        <ValidationSummary class="text-danger" role="alert" />
+        <div class="form-floating mb-3">
+            <InputText @bind-Value="Input.DeckName" class="form-control" />
+            <label for="name">Deck Name</label>
+            <ValidationMessage For="() => Input.DeckName" class="text-danger" />
+        </div>
+        <button type="submit" class="btn btn-success" style="max-width: 375px;">Create Deck</button>
+    </EditForm>
+</div>
+
+@code {
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = new();
+
+    private UserState UserState { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        UserState = await UserStateProvider.Get();
+        await base.OnInitializedAsync();
+    }
+
+    private async Task AddDeck()
+    {
+        Deck deck = new Deck();
+        deck.UserId = UserState!.User!.Id;
+        deck.Name = Input.DeckName;
+        await DeckWriter.Create(deck);
+        NavigationManager.NavigateTo("/DeckManagement");
+    }
+
+    private class InputModel
+    {
+        public string DeckName { get; set; } = string.Empty;
+    }
+}

@@ -1,10 +1,10 @@
-﻿namespace Flashcardia.Models
+﻿namespace Flashcardia.Repostories
 {
-    public class CardWriter
+    public class DeckWriter
     {
         private readonly ApplicationDbContext _context;
 
-        public CardWriter(ApplicationDbContext context)
+        public DeckWriter(ApplicationDbContext context)
         {
             _context = context;
         }

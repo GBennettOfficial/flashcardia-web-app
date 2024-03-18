@@ -1,4 +1,6 @@
 
+using Flashcardia.Repostories;
+
 namespace Flashcardia
 {
     public class Program
@@ -34,6 +36,14 @@ namespace Flashcardia
                 .AddDefaultTokenProviders();
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+
+            builder.Services.AddScoped<DeckListReader>();
+            builder.Services.AddScoped<CardListReader>();
+            builder.Services.AddScoped<DeckWriter>();
+            builder.Services.AddScoped<CardWriter>();
+
+            builder.Services.AddScoped<UserStateProvider>();
+            
 
             var app = builder.Build();
 

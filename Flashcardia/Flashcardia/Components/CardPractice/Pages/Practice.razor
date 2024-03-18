@@ -1,0 +1,86 @@
+﻿@page "/CardPractice/"
+
+@using Flashcardia.Components.CardPractice.Shared
+@using Flashcardia.Repostories
+
+@inject NavigationManager NavigationManager
+@inject UserStateProvider UserStateProvider
+@inject CardListReader CardListReader
+@inject CardWriter CardWriter
+
+<div class="text-center">
+    <h3>@UserState.SelectedDeck!.Name</h3>
+    @if (Cards.Any())
+    {
+        <h6>click card to flip</h6>
+        <div class="mb-5 mt-3 w-100" style="height: 40vh;">
+            <FlipCard Front="@UserState.SelectedCard!.Front" Back="@UserState.SelectedCard.Back" />
+        </div>
+        <a class="btn btn-primary w-100" style="max-width: 375px;" @onclick="GrabNextCard">Next</a>
+        <a class="btn btn-success w-100" style="max-width: 375px;" href="/CardPractice/CreateCard">Create Card</a>
+        <a class="btn btn-danger w-100" style="max-width: 375px;" @onclick="Delete">Delete Card</a>
+    }
+    else
+    {
+        <h6 class="m-3">Deck Empty</h6>
+        <a class="btn btn-success w-100" style="max-width: 375px;" href="/CardPractice/CreateCard">Create Card</a>
+    }
+</div>
+
+@code {
+
+    private UserState UserState { get; set; } = default!;
+
+    private List<Card> Cards { get; set; } = new();
+
+    private Card? CurrentCard { get; set; } = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        UserState = await UserStateProvider.Get();
+        Cards = (await CardListReader.Get(UserState.SelectedDeck!.Id))
+            .ToList();
+
+        if (Cards.Any())
+        {
+            Shuffle();
+            GrabNextCard();
+        }
+
+    }
+
+    Random Random = new();
+
+    private int Index = 0;
+
+    private void GrabNextCard()
+    {
+        if (Cards.Any() == false)
+        {
+            UserState.SelectedCard = null;
+            return;
+        }
+        if (Index >= Cards.Count)
+        {
+            Index = 0;
+        }
+        CurrentCard = Cards![Index];
+        UserState.SelectedCard = CurrentCard;
+    }
+
+    private void Shuffle()
+    {
+        Cards = Cards.OrderBy(x => Random.Next()).ToList();
+        Index = 0;
+    }
+
+    private async Task Delete()
+    {
+        Cards.Remove(CurrentCard!);
+        await CardWriter.Delete(CurrentCard!);
+        GrabNextCard();
+    }
+
+}

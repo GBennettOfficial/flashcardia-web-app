@@ -2,7 +2,7 @@
 using Microsoft.Identity.Client;
 using System.Runtime.InteropServices;
 
-namespace Flashcardia.Models
+namespace Flashcardia.Repostories
 {
     public class DeckListReader
     {
@@ -13,7 +13,7 @@ namespace Flashcardia.Models
             _context = context;
         }
 
-        public async Task<IEnumerable<Deck>> Get(string userId)
+        public async Task<ICollection<Deck>> Get(string userId)
         {
             return await _context.Decks
                 .Where(x => x.UserId == userId)
