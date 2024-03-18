@@ -9,22 +9,25 @@
 @inject CardWriter CardWriter
 
 <div class="text-center">
-    <h3>@UserState.SelectedDeck!.Name</h3>
-    @if (Cards.Any())
+    <h2 class="h2">Practice</h2>
+    <h3 class="h6">@UserState.SelectedDeck!.Name</h3>
+    <hr class="mb-3" />
+    @if (Cards.Any() == false)
     {
-        <h6>click card to flip</h6>
-        <div class="mb-5 mt-3 w-100" style="height: 40vh;">
-            <FlipCard Front="@UserState.SelectedCard!.Front" Back="@UserState.SelectedCard.Back" />
-        </div>
-        <a class="btn btn-primary w-100" style="max-width: 375px;" @onclick="GrabNextCard">Next</a>
-        <a class="btn btn-success w-100" style="max-width: 375px;" href="/CardPractice/CreateCard">Create Card</a>
-        <a class="btn btn-danger w-100" style="max-width: 375px;" @onclick="Delete">Delete Card</a>
+        <h6 class="mt-3 mb-3">deck empty</h6>
+        <a class="btn btn-success w-100 mb-3" style="max-width: 375px;" href="/CardPractice/CreateCard">Create Card</a>
     }
     else
     {
-        <h6 class="m-3">Deck Empty</h6>
-        <a class="btn btn-success w-100" style="max-width: 375px;" href="/CardPractice/CreateCard">Create Card</a>
+        <p>click card to flip</p>
+        <div class="mb-5 mt-3 w-100" style="height: 40vh;">
+            <FlipCard Front="@UserState.SelectedCard!.Front" Back="@UserState.SelectedCard.Back" />
+        </div>
+        <a class="btn btn-primary w-100 mt-3 mb-3" style="max-width: 375px;" @onclick="GrabNextCard">Next</a>
+        <a class="btn btn-success w-100 mb-3" style="max-width: 375px;" href="/CardPractice/CreateCard">Create Card</a>
+        <a class="btn btn-danger w-100 mb-3" style="max-width: 375px;" @onclick="() => Delete()">Delete Card</a>
     }
+    <a class="btn btn-secondary w-100 mb-3" style="max-width: 375px;" href="/DeckManagement">Deck Menu</a>
 </div>
 
 @code {
@@ -57,12 +60,14 @@
 
     private void GrabNextCard()
     {
-        if (Cards.Any() == false)
+        int cardCount = Cards.Count;
+        if (cardCount == 0)
         {
             UserState.SelectedCard = null;
             return;
         }
-        if (Index >= Cards.Count)
+        Index++;
+        if (Index > cardCount - 1)
         {
             Index = 0;
         }
@@ -80,7 +85,16 @@
     {
         Cards.Remove(CurrentCard!);
         await CardWriter.Delete(CurrentCard!);
-        GrabNextCard();
+
+        if (Cards.Any())
+        {
+            GrabNextCard();
+        }
+        else
+        {
+            CurrentCard = null;
+        }
+
     }
 
 }

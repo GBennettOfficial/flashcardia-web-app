@@ -8,24 +8,25 @@
 
 
 <div class="text-center">
-    <h3>Create Card</h3>
-    <h6 class="mb-5">@UserState.SelectedDeck!.Name</h6>
+    <h2 class="h2">Create Card</h2>
+    <h3 class="h6">@UserState.SelectedDeck!.Name</h3>
+    <hr class="mb-3" />
     <EditForm Model="Input" method="post" OnValidSubmit="AddCard" FormName="create-card" >
         <DataAnnotationsValidator />
         <ValidationSummary class="text-danger" role="alert" />
         <div class="form-floating mb-3">
-            <InputTextArea @bind-Value="Input.Front" class="form-control" style="min-height: 320px;" />
+            <InputTextArea @bind-Value="Input.Front" class="form-control" style="min-height: 220px;" />
             <label for="name">Front</label>
             <ValidationMessage For="() => Input.Front" class="text-danger" />
         </div>
         <div class="form-floating mb-3">
-            <InputTextArea @bind-Value="Input.Back" class="form-control" style="min-height: 320px;" />
+            <InputTextArea @bind-Value="Input.Back" class="form-control" style="min-height: 220px;" />
             <label for="name">Back</label>
             <ValidationMessage For="() => Input.Back" class="text-danger" />
         </div>
         <button type="submit" class="btn btn-success w-100" style="max-width: 375px;">Create Card</button>
     </EditForm>
-    <a class="btn btn-secondary w-100 mt-5" style="max-width: 375px;" href="/CardPractice/">Practice</a>
+    <a class="btn btn-secondary w-100 mt-3 mb-3" style="max-width: 375px;" href="/CardPractice/">Practice</a>
 </div>
 
 
@@ -43,6 +44,8 @@
         card.Back = Input.Back;
         card.DeckId = UserState.SelectedDeck!.Id;
         await CardWriter.Create(card);
+        Input.Front = string.Empty;
+        Input.Back = string.Empty;
     }
 
     protected override async Task OnInitializedAsync()

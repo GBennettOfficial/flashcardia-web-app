@@ -8,8 +8,8 @@
 @inject UserStateProvider UserStateProvider
 
 <div class="text-center">
-    <h1>Create Deck</h1>
-    <hr class="mb-2" />
+    <h2 class="h2">Create Deck</h2>
+    <hr class="mb-3" />
     <EditForm Model="Input" method="post" OnValidSubmit="AddDeck" FormName="create-deck">
         <DataAnnotationsValidator />
         <ValidationSummary class="text-danger" role="alert" />
@@ -18,8 +18,9 @@
             <label for="name">Deck Name</label>
             <ValidationMessage For="() => Input.DeckName" class="text-danger" />
         </div>
-        <button type="submit" class="btn btn-success" style="max-width: 375px;">Create Deck</button>
+        <button type="submit" class="btn btn-success w-100" style="max-width: 375px;">Create Deck</button>
     </EditForm>
+    <button type="submit" class="btn btn-secondary w-100" style="max-width: 375px;">Deck Menu</button>
 </div>
 
 @code {

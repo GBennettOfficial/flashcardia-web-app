@@ -4,22 +4,26 @@
 @inject UserStateProvider UserStateProvider
 
 <div class="text-center">
-    <h3>Deck Menu</h3>
-    <hr class="mb-2" />
-    @if (Decks?.Any() ?? false)
+    <h2 class="h2">Deck Menu</h2>
+    <hr class="mb-3" />
+    @if (Decks.Any() == false)
+    {
+        <p class="mb-3">create a deck</p>
+    }
+    else
     {
         <ul class="list-group m-5">
             @foreach (Deck deck in Decks)
             {
                 if (UserState.SelectedDeck != null && deck.Id.Equals(UserState.SelectedDeck.Id))
                 {
-                    <li class="list-group-item active" @onclick="DeselectDeck">
+                    <li class="list-group-item mb-3 rounded active" @onclick="DeselectDeck">
                         @deck.Name
                     </li>
                 }
                 else
                 {
-                    <li class="list-group-item" @onclick="() => SelectDeck(deck)">
+                    <li class="list-group-item mb-3 rounded" @onclick="() => SelectDeck(deck)">
                         @deck.Name
                     </li>
                 }
@@ -27,6 +31,7 @@
             }
         </ul>
     }
+    
     <div class="d-flex flex-column justify-content-center align-items-center">
         @if (UserState?.SelectedDeck != null)
         {
@@ -49,11 +54,13 @@
 
     private UserState UserState { get; set; } = default!;
 
-    private ICollection<Deck>? Decks { get; set; } = null;
+    private ICollection<Deck> Decks { get; set; } = new List<Deck>();
 
     protected override async Task OnInitializedAsync()
     {
         UserState = await UserStateProvider.Get();
+        UserState.SelectedDeck = null;
+        UserState.SelectedCard = null;
         Decks = await DeckListReader.Get(UserState.User!.Id);
     }
 

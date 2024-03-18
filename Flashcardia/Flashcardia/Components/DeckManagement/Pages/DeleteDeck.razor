@@ -9,9 +9,10 @@
 @inject UserStateProvider UserStateProvider
 
 <div class="text-center">
-    <h1>Delete Deck</h1>
-    <h3>@Input.ConfirmDelete</h3>
-    <hr class="mb-2" />
+    <h2 class="h2">Delete Deck</h2>
+    <h3 class="h6">@UserState.SelectedDeck?.Name</h3>
+    <hr class="mb-3" />
+    <p>confirm by typing in @Input.ConfirmDelete</p>
     <EditForm Model="Input" method="post" OnValidSubmit="RemoveDeck" FormName="create-deck">
         <DataAnnotationsValidator />
         <ValidationSummary class="text-danger" role="alert" />
@@ -20,8 +21,9 @@
             <label for="name">Deck Name</label>
             <ValidationMessage For="() => Input.DeckName" class="text-danger" />
         </div>
-        <button type="submit" class="btn btn-danger" style="max-width: 375px;">Delete Deck</button>
+        <button type="submit" class="btn btn-danger w-100" style="max-width: 375px;">Delete Deck</button>
     </EditForm>
+    <button type="submit" class="btn btn-secondary w-100" style="max-width: 375px;">Deck Menu</button>
 </div>
 
 @code {
