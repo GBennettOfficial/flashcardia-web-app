@@ -17,13 +17,13 @@
             {
                 if (UserState.SelectedDeck != null && deck.Id.Equals(UserState.SelectedDeck.Id))
                 {
-                    <li class="list-group-item mb-3 rounded active" @onclick="DeselectDeck">
+                    <li class="list-group-item mb-3 rounded active border border-1 border-dark" @onclick="DeselectDeck">
                         @deck.Name
                     </li>
                 }
                 else
                 {
-                    <li class="list-group-item mb-3 rounded" @onclick="() => SelectDeck(deck)">
+                    <li class="list-group-item mb-3 rounded border border-1 border-dark" @onclick="() => SelectDeck(deck)">
                         @deck.Name
                     </li>
                 }

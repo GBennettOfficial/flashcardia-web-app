@@ -1,5 +1,6 @@
 
 using Flashcardia.Repostories;
+using Microsoft.JSInterop;
 
 namespace Flashcardia
 {
@@ -24,13 +25,17 @@ namespace Flashcardia
                     options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
                 })
                 .AddIdentityCookies();
+                
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            builder.Services.AddIdentityCore<ApplicationUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddSignInManager()
                 .AddDefaultTokenProviders();
@@ -43,7 +48,6 @@ namespace Flashcardia
             builder.Services.AddScoped<CardWriter>();
 
             builder.Services.AddScoped<UserStateProvider>();
-            
 
             var app = builder.Build();
 

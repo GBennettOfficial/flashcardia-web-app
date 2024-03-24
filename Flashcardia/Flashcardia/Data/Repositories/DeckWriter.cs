@@ -1,29 +1,29 @@
 ﻿namespace Flashcardia.Repostories
 {
-    public class CardWriter
+    public class DeckWriter
     {
         private readonly ApplicationDbContext _context;
 
-        public CardWriter(ApplicationDbContext context)
+        public DeckWriter(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task Create(Card card)
+        public async Task Create(Deck deck)
         {
-            await _context.Cards.AddAsync(card);
+            await _context.Decks.AddAsync(deck);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update(Card card)
+        public async Task Update(Deck deck)
         {
-            _context.Update(card);
+            _context.Decks.Update(deck);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(Card card)
+        public async Task Delete(Deck deck)
         {
-            _context.Remove(card);
+            _context.Decks.Remove(deck);
             await _context.SaveChangesAsync();
         }
     }

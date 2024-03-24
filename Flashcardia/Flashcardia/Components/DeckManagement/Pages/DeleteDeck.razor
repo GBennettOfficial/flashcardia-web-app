@@ -15,15 +15,15 @@
     <p>confirm by typing in @Input.ConfirmDelete</p>
     <EditForm Model="Input" method="post" OnValidSubmit="RemoveDeck" FormName="create-deck">
         <DataAnnotationsValidator />
-        <ValidationSummary class="text-danger" role="alert" />
+        <ValidationSummary class="text-danger text-center" role="alert" />
         <div class="form-floating mb-3">
             <InputText @bind-Value="Input.DeckName" class="form-control" />
             <label for="name">Deck Name</label>
-            <ValidationMessage For="() => Input.DeckName" class="text-danger" />
+            @* <ValidationMessage For="() => Input.DeckName" class="text-danger" /> *@
         </div>
-        <button type="submit" class="btn btn-danger w-100" style="max-width: 375px;">Delete Deck</button>
+        <button type="submit" class="btn btn-danger mt-4 mb-3 w-100" style="max-width: 375px;">Delete Deck</button>
     </EditForm>
-    <button type="submit" class="btn btn-secondary w-100" style="max-width: 375px;">Deck Menu</button>
+    <a class="btn btn-secondary w-100" style="max-width: 375px;" href="/DeckManagement/">Deck Menu</a>
 </div>
 
 @code {

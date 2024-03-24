@@ -4,6 +4,7 @@
 
 @inject UserStateProvider UserStateProvider
 @inject CardWriter CardWriter
+
 @inject NavigationManager NavigationManager
 
 
@@ -11,6 +12,10 @@
     <h2 class="h2">Create Card</h2>
     <h3 class="h6">@UserState.SelectedDeck!.Name</h3>
     <hr class="mb-3" />
+    @if (CardCreated)
+    {
+        <h6 class="text-success">@CardCreatedMessage</h6>
+    }
     <EditForm Model="Input" method="post" OnValidSubmit="AddCard" FormName="create-card" >
         <DataAnnotationsValidator />
         <ValidationSummary class="text-danger" role="alert" />
@@ -37,21 +42,51 @@
 
     private UserState UserState { get; set; } = default!;
 
-    public async Task AddCard()
+    private bool CardCreated { get; set; } = false;
+
+    private string CardCreatedMessage { get; set; } = string.Empty;
+
+    private int CardCounter { get; set; } = 0;
+
+    public void AddCard()
     {
         Card card = new();
         card.Front = Input.Front;
         card.Back = Input.Back;
         card.DeckId = UserState.SelectedDeck!.Id;
-        await CardWriter.Create(card);
+        CardWriter.Create(card);
         Input.Front = string.Empty;
         Input.Back = string.Empty;
+        UpdateUICardCreated();
+
     }
+
+    public void UpdateUICardCreated()
+    {
+        CardCreated = true;
+        CardCounter++;
+        if(CardCounter == 1)
+        {
+            CardCreatedMessage = "Card Created!";
+        }
+        else
+        {
+            CardCreatedMessage = $"Card Created! ({CardCounter})";
+        }
+        StateHasChanged();
+    }
+
+    private void ResetUICardCreated()
+    {
+        CardCreated = false;
+        CardCreatedMessage = string.Empty;
+        CardCounter = 0;
+    }
+
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-
         UserState = await UserStateProvider.Get();
         
     }

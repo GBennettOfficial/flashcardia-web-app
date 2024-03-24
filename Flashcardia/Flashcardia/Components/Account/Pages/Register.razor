@@ -41,8 +41,15 @@
             <label for="confirm-password">Confirm Password</label>
             <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
         </div>
-        <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+        <div class="checkbox w-100 text-start">
+            <label class="form-label ms-2 mb-4">
+                <InputCheckbox @bind-Value="Input.RememberMe" class="darker-border-checkbox form-check-input " />
+                Remember me
+            </label>
+        </div>
+        <button type="submit" class="w-100 btn btn-primary mb-3" style="max-width: 375px;">Register</button>
     </EditForm>
+        <a class="btn btn-secondary w-100" style="max-width: 375px;" href="/">Home</a>
 </div>
 @*     <div class="col-md-6 col-md-offset-2">
         <section>
@@ -72,7 +79,7 @@
             IdentityErrors = result.Errors;
             return;
         }
-        await SignInManager.SignInAsync(user, isPersistent: false);
+        await SignInManager.SignInAsync(user, isPersistent: Input.RememberMe);
         NavigationManager.NavigateTo("/");
     }
 
@@ -96,5 +103,7 @@
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; } = "";
+
+        public bool RememberMe { get; set; } = false;
     }
 }

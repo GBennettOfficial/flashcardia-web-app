@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-Flashcardia-fd3d1a2e-2fd2-4fc5-bec8-881fdd61c552</UserSecretsId>
+	<Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
