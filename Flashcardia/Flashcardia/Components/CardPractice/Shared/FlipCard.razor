@@ -18,6 +18,20 @@
 </div>
 
 @code {
+    [Parameter]
+    public string Front { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Back { get; set; } = string.Empty;
+
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        Flipped = false;
+    }
+
+
     bool Flipped { get; set; } = false;
 
     void Flip() => Flipped = !Flipped;
@@ -25,13 +39,3 @@
     string GetFlipCss() => Flipped ? "flipped" : "";
 }
 
-
-@code {
-
-    [Parameter]
-    public string Front { get; set; } = string.Empty;
-
-    [Parameter]
-    public string Back { get; set; } = string.Empty;
-
-}
