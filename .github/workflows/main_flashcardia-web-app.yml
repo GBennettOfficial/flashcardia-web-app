@@ -26,13 +26,13 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/Flashcardia
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/Flashcardia/Flashcardia.sln
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/Flashcardia
+          path: ${{env.DOTNET_ROOT}}/Flashcardia/Flashcardia.sln
 
   deploy:
     runs-on: ubuntu-latest
