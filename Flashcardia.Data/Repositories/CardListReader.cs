@@ -1,6 +1,6 @@
 ﻿namespace Flashcardia.Data.Repositories
 {
-    public class CardListReader
+    public class CardListReader : IReadCards
     {
         private readonly ApplicationDbContext _context;
 

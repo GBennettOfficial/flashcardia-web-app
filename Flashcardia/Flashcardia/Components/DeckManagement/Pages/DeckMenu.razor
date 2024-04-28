@@ -1,6 +1,6 @@
 ﻿@page "/DeckManagement/"
 
-@inject DeckListReader DeckListReader
+@inject IReadDecks ReadDecks
 @inject UserStateProvider UserStateProvider
 
 <PageTitle>Decks</PageTitle>
@@ -63,7 +63,7 @@
         UserState = await UserStateProvider.Get();
         UserState.SelectedDeck = null;
         UserState.SelectedCard = null;
-        Decks = await DeckListReader.Get(UserState.User!.Id);
+        Decks = await ReadDecks.Get(UserState.User!.Id);
     }
 
     private void SelectDeck(Deck deck)

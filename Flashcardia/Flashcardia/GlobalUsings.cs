@@ -8,5 +8,7 @@ global using Flashcardia.Components.Account;
 global using Flashcardia.Data;
 global using Flashcardia.Data.Repositories;
 
-
+global using Flashcardia.Global.Models;
+global using Flashcardia.Global.Interfaces;
+global using Flashcardia.Global.Interfaces.DataAccess;
 

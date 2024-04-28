@@ -2,7 +2,7 @@
 
 
 @inject UserStateProvider UserStateProvider
-@inject CardWriter CardWriter
+@inject IWriteCard WriteCard
 
 @inject NavigationManager NavigationManager
 
@@ -53,7 +53,7 @@
         card.Front = Input.Front;
         card.Back = Input.Back;
         card.DeckId = UserState.SelectedDeck!.Id;
-        CardWriter.Create(card);
+        WriteCard.Create(card);
         Input.Front = string.Empty;
         Input.Back = string.Empty;
         UpdateUICardCreated();

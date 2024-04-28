@@ -1,6 +1,6 @@
 ﻿namespace Flashcardia.Data.Repositories
 {
-    public class DeckWriter
+    public class DeckWriter : IWriteDeck
     {
         private readonly ApplicationDbContext _context;
 

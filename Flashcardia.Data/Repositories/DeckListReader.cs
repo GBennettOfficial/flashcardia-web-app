@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace Flashcardia.Data.Repositories
 {
-    public class DeckListReader
+    public class DeckListReader : IReadDecks
     {
         private readonly ApplicationDbContext _context;
 

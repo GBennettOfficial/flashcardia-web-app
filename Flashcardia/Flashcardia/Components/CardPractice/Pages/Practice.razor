@@ -4,8 +4,8 @@
 
 @inject NavigationManager NavigationManager
 @inject UserStateProvider UserStateProvider
-@inject CardListReader CardListReader
-@inject CardWriter CardWriter
+@inject IReadCards ReadCards
+@inject IWriteCard WriteCard
 
 <PageTitle>Practice</PageTitle>
 
@@ -50,7 +50,7 @@
         await base.OnInitializedAsync();
 
         UserState = await UserStateProvider.Get();
-        Cards = (await CardListReader.Get(UserState.SelectedDeck!.Id))
+        Cards = (await ReadCards.Get((int)UserState.SelectedDeck!.Id!))
             .ToList();
 
         if (Cards.Any())
@@ -59,7 +59,6 @@
             GrabNextCard();
         }
     }
-
 
 
     Random Random = new();
@@ -102,7 +101,7 @@
     {
         Cards.Remove(CurrentCard!);
         StateHasChanged();
-        CardWriter.Delete(CurrentCard!);
+        WriteCard.Delete(CurrentCard!);
         CardDeleted = true;
         if (Cards.Any() == false)
         {

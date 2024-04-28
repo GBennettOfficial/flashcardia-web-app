@@ -1,6 +1,8 @@
-﻿namespace Flashcardia.Data.Repositories
+﻿using Flashcardia.Global.Interfaces.DataAccess;
+
+namespace Flashcardia.Data.Repositories
 {
-    public class CardWriter
+    public class CardWriter : IWriteCard
     {
         private readonly ApplicationDbContext _context;
 

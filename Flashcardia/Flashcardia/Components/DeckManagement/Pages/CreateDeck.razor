@@ -1,7 +1,7 @@
 ﻿
 @page "/DeckManagement/CreateDeck/"
 
-@inject DeckWriter DeckWriter
+@inject IWriteDeck WriteDeck
 @inject NavigationManager NavigationManager
 @inject UserStateProvider UserStateProvider
 
@@ -39,7 +39,7 @@
         Deck deck = new Deck();
         deck.UserId = UserState!.User!.Id;
         deck.Name = Input.DeckName;
-        await DeckWriter.Create(deck);
+        await WriteDeck.Create(deck);
         NavigationManager.NavigateTo("/DeckManagement");
     }
 

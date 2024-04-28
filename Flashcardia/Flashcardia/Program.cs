@@ -39,10 +39,10 @@ namespace Flashcardia
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
-            builder.Services.AddScoped<DeckListReader>();
-            builder.Services.AddScoped<CardListReader>();
-            builder.Services.AddScoped<DeckWriter>();
-            builder.Services.AddScoped<CardWriter>();
+            builder.Services.AddScoped<IReadDecks, DeckListReader>();
+            builder.Services.AddScoped<IWriteDeck, DeckWriter>();
+            builder.Services.AddScoped<IReadCards, CardListReader>();
+            builder.Services.AddScoped<IWriteCard, CardWriter>();
 
             builder.Services.AddScoped<UserStateProvider>();
 
