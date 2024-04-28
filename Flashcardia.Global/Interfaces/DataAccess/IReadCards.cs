@@ -8,6 +8,6 @@ namespace Flashcardia.Global.Interfaces.DataAccess
 {
     public interface IReadCards
     {
-        Task<ICollection<Card>> Get(int deckId);
+        Task<ServiceResponse<ICollection<Card>>> Get(int deckId);
     }
 }

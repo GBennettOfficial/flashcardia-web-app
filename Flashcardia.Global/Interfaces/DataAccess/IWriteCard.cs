@@ -2,8 +2,8 @@
 {
     public interface IWriteCard
     {
-        Task Create(Card card);
-        Task Delete(Card card);
-        Task Update(Card card);
+        Task<ServiceResponse> Create(Card card);
+        Task<ServiceResponse> Delete(Card card);
+        Task<ServiceResponse> Update(Card card);
     }
 }

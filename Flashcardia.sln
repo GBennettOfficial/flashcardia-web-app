@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flashcardia", "Flashcardia\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flashcardia.Data", "Flashcardia.Data\Flashcardia.Data.csproj", "{06688C3C-952D-4B7B-90FF-09567E74DBAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashcardia.Global", "Flashcardia.Global\Flashcardia.Global.csproj", "{36AF6F5B-7CAD-4D7C-83C3-13C16EA34008}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flashcardia.Global", "Flashcardia.Global\Flashcardia.Global.csproj", "{36AF6F5B-7CAD-4D7C-83C3-13C16EA34008}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

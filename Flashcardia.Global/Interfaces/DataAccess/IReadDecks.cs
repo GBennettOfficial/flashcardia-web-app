@@ -2,6 +2,6 @@
 {
     public interface IReadDecks
     {
-        Task<ICollection<Deck>> Get(string userId);
+        Task<ServiceResponse<ICollection<Deck>>> Get(string userId);
     }
 }
