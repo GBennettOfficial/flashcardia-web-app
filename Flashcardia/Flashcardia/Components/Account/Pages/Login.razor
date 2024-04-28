@@ -15,7 +15,7 @@
 
 <div class="text-center">
     <h1>Login</h1>
-    <hr class="mb-5" />
+    <hr class="mb-3" />
     <StatusMessage Message="@ErrorMessage" />
     <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login">
         <DataAnnotationsValidator />
@@ -37,7 +37,7 @@
                 Remember me
             </label>
         </div>
-        <button type="submit" class="w-100 btn btn-primary mb-3" style="max-width: 375px;">Log in</button>
+        <button type="submit" class="w-100 btn btn-primary mt-2 mb-3" style="max-width: 375px;">Log in</button>
 
     </EditForm>
     <a class="btn btn-secondary w-100" style="max-width: 375px;" href="/">Home</a>
