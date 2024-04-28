@@ -4,8 +4,8 @@
 
 @inject NavigationManager NavigationManager
 @inject UserStateProvider UserStateProvider
-@inject IReadCards ReadCards
-@inject IWriteCard WriteCard
+@inject IDataAccessReader<int, List<Card>> ReadCards
+@inject IDataAccessWriter<Card> WriteCard
 
 <PageTitle>Practice</PageTitle>
 
@@ -39,7 +39,7 @@
 
     private UserState UserState { get; set; } = default!;
 
-    private List<Card> Cards { get; set; } = new();
+    private Card[] Cards { get; set; } = new Card[0];
 
     private Card? CurrentCard { get; set; } = null;
 
@@ -50,8 +50,9 @@
         await base.OnInitializedAsync();
 
         UserState = await UserStateProvider.Get();
-        Cards = (await ReadCards.Get((int)UserState.SelectedDeck!.Id!))
-            .ToList();
+        ServiceResponse<List<Card>> response
+            = await ReadCards.Read((int)UserState.SelectedDeck!.Id!);
+        Cards = response.Value.ToArray();
 
         if (Cards.Any())
         {
@@ -67,7 +68,7 @@
 
     private void GrabNextCard()
     {
-        int cardCount = Cards.Count;
+        int cardCount = Cards.Count();
         if (cardCount == 0)
         {
             UserState.SelectedCard = null;
@@ -93,13 +94,13 @@
 
     private void Shuffle()
     {
-        Cards = Cards.OrderBy(x => Random.Next()).ToList();
+        Cards = Cards.OrderBy(x => Random.Next()).ToArray();
         Index = 0;
     }
 
     private void Delete()
     {
-        Cards.Remove(CurrentCard!);
+        Cards = Cards.Where(x => x != CurrentCard).ToArray();
         StateHasChanged();
         WriteCard.Delete(CurrentCard!);
         CardDeleted = true;

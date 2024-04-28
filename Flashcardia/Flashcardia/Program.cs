@@ -1,4 +1,6 @@
 
+using Flashcardia.Global.Interfaces.DataAccess;
+
 namespace Flashcardia
 {
     public class Program
@@ -39,10 +41,10 @@ namespace Flashcardia
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
-            builder.Services.AddScoped<IReadDecks, DeckListReader>();
-            builder.Services.AddScoped<IWriteDeck, DeckWriter>();
-            builder.Services.AddScoped<IReadCards, CardListReader>();
-            builder.Services.AddScoped<IWriteCard, CardWriter>();
+            builder.Services.AddScoped<IDataAccessReader<string, List<Deck>>, DeckListReader>();
+            builder.Services.AddScoped<IDataAccessWriter<Deck>, DeckWriter>();
+            builder.Services.AddScoped<IDataAccessReader<int, List<Card>>, CardListReader>();
+            builder.Services.AddScoped<IDataAccessWriter<Card>, CardWriter>();
 
             builder.Services.AddScoped<UserStateProvider>();
 

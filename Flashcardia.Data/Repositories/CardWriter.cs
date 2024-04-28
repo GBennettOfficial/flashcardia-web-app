@@ -1,8 +1,9 @@
 ﻿using Flashcardia.Global.Interfaces.DataAccess;
+using Flashcardia.Global.Models;
 
 namespace Flashcardia.Data.Repositories
 {
-    public class CardWriter : IWriteCard
+    public class CardWriter : IDataAccessWriter<Card>
     {
         private readonly ApplicationDbContext _context;
 
@@ -11,22 +12,55 @@ namespace Flashcardia.Data.Repositories
             _context = context;
         }
 
-        public async Task Create(Card card)
+        public async Task<ServiceResponse> Create(Card card)
         {
-            await _context.Cards.AddAsync(card);
-            await _context.SaveChangesAsync();
+            return await Task.Run(() =>
+            {
+                try
+                {
+                    _context.Cards.Add(card);
+                    _context.SaveChanges();
+                    return new ServiceResponse(isSuccess: true, message: "", exception: null);
+                }
+                catch (Exception ex)
+                {
+                    return new ServiceResponse(isSuccess: false, message: "failure adding card to database", exception: ex);
+                }
+            });
         }
 
-        public async Task Update(Card card)
+        public async Task<ServiceResponse> Update(Card card)
         {
-            _context.Cards.Update(card);
-            await _context.SaveChangesAsync();
+            return await Task.Run(() =>
+            {
+                try
+                {
+                    _context.Cards.Update(card);
+                    _context.SaveChanges();
+                    return new ServiceResponse(isSuccess: true, message: "", exception: null);
+                }
+                catch (Exception ex)
+                {
+                    return new ServiceResponse(isSuccess: false, message: "failure updating card in database", exception: ex);
+                }
+            });
         }
 
-        public async Task Delete(Card card)
+        public async Task<ServiceResponse> Delete(Card card)
         {
-            _context.Cards.Remove(card);
-            await _context.SaveChangesAsync();
+            return await Task.Run(() =>
+            {
+                try
+                {
+                    _context.Cards.Remove(card);
+                    _context.SaveChanges();
+                    return new ServiceResponse(isSuccess: true, message: "", exception: null);
+                }
+                catch (Exception ex)
+                {
+                    return new ServiceResponse(isSuccess: false, message: "failure deleting card from database", exception: ex);
+                }
+            });
         }
     }
 }

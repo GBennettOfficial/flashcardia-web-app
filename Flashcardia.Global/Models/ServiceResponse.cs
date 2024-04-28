@@ -12,12 +12,10 @@ namespace Flashcardia.Global.Models
         public ServiceResponse(bool isSuccess, T? value, string? message, Exception? exception)
             : base(isSuccess, message, exception)
         {
-            IsSuccess = isSuccess;
-            Message = message;
-            Exception = exception;
+            Value = value;
         }
 
-        T? Value { get; set; }
+        public T? Value { get; set; }
     }
 
     public class ServiceResponse

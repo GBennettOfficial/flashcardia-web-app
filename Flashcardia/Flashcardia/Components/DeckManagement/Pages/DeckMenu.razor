@@ -1,6 +1,6 @@
 ﻿@page "/DeckManagement/"
 
-@inject IReadDecks ReadDecks
+@inject IDataAccessReader<string, List<Deck>> ReadDecks
 @inject UserStateProvider UserStateProvider
 
 <PageTitle>Decks</PageTitle>
@@ -63,7 +63,8 @@
         UserState = await UserStateProvider.Get();
         UserState.SelectedDeck = null;
         UserState.SelectedCard = null;
-        Decks = await ReadDecks.Get(UserState.User!.Id);
+        ServiceResponse<List<Deck>> response = await ReadDecks.Read(UserState.User!.Id);
+        Decks = response.Value;
     }
 
     private void SelectDeck(Deck deck)
