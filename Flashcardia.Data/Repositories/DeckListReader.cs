@@ -2,7 +2,7 @@
 using Microsoft.Identity.Client;
 using System.Runtime.InteropServices;
 
-namespace Flashcardia.Repostories
+namespace Flashcardia.Data.Repositories
 {
     public class DeckListReader
     {

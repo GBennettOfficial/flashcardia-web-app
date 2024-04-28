@@ -1,4 +1,4 @@
-﻿namespace Flashcardia.Repostories
+﻿namespace Flashcardia.Data.Repositories
 {
     public class CardWriter
     {

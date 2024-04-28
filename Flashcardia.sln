@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flashcardia", "Flashcardia\Flashcardia\Flashcardia.csproj", "{B688CDD4-4C1D-4FFC-BC65-62B4B715B1B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashcardia.Data", "Flashcardia.Data\Flashcardia.Data.csproj", "{06688C3C-952D-4B7B-90FF-09567E74DBAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,8 +17,15 @@ Global
 		{B688CDD4-4C1D-4FFC-BC65-62B4B715B1B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B688CDD4-4C1D-4FFC-BC65-62B4B715B1B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B688CDD4-4C1D-4FFC-BC65-62B4B715B1B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06688C3C-952D-4B7B-90FF-09567E74DBAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06688C3C-952D-4B7B-90FF-09567E74DBAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06688C3C-952D-4B7B-90FF-09567E74DBAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06688C3C-952D-4B7B-90FF-09567E74DBAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C66850CC-0A70-440C-BA19-2EB1A98570DD}
 	EndGlobalSection
 EndGlobal

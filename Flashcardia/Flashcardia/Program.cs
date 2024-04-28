@@ -1,7 +1,4 @@
 
-using Flashcardia.Repostories;
-using Microsoft.JSInterop;
-
 namespace Flashcardia
 {
     public class Program

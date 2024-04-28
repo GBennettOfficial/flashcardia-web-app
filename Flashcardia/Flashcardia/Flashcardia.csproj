@@ -20,4 +20,8 @@
     <Folder Include="Models\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Flashcardia.Data\Flashcardia.Data.csproj" />
+  </ItemGroup>
+
 </Project>
