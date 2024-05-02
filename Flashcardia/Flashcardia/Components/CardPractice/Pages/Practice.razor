@@ -57,7 +57,7 @@
         {
             Cards = response.Value.ToArray();
         }
-        
+
 
         if (Cards.Any())
         {
@@ -103,16 +103,12 @@
         Index = 0;
     }
 
-    private void Delete()
+    private async Task Delete()
     {
-        Cards = Cards.Where(x => x != CurrentCard).ToArray();
-        StateHasChanged();
-        WriteCard.Delete(CurrentCard!);
         CardDeleted = true;
-        if (Cards.Any() == false)
-        {
-            CurrentCard = null;
-        }
+        StateHasChanged();
+        Cards = Cards.Where(x => x != CurrentCard).ToArray();
+        await WriteCard.Delete(CurrentCard!);
     }
 
 }
