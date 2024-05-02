@@ -37,7 +37,7 @@
 
 @code {
 
-    private UserState UserState { get; set; } = default!;
+    private UserState? UserState { get; set; } = null;
 
     private Card[] Cards { get; set; } = new Card[0];
 
@@ -52,7 +52,12 @@
         UserState = await UserStateProvider.Get();
         ServiceResponse<List<Card>> response
             = await ReadCards.Read((int)UserState.SelectedDeck!.Id!);
-        Cards = response.Value.ToArray();
+
+        if (response.IsSuccess)
+        {
+            Cards = response.Value.ToArray();
+        }
+        
 
         if (Cards.Any())
         {

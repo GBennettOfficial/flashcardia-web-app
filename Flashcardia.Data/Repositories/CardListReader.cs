@@ -20,7 +20,7 @@ namespace Flashcardia.Data.Repositories
                 try
                 {
                     List<Card> cards = _context.Cards
-                        .Where(x => x.Id == id)
+                        .Where(x => x.DeckId == id)
                         .AsNoTracking()
                         .ToList();
 
