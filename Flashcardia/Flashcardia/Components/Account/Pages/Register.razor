@@ -16,14 +16,13 @@
 <div class="text-center">
     <h1>Register</h1>
     <hr class="mb-2" />
-    <StatusMessage Message="@Message" />
+    <StatusMessage Message="@ErrorMessage"/>
     <EditForm Model="Input" method="post" OnValidSubmit="RegisterUser" FormName="register">
         <DataAnnotationsValidator />
-        <ValidationSummary class="text-danger" role="alert" />
         <div class="form-floating mb-3">
             <InputText @bind-Value="Input.UserName" class="form-control" />
             <label for="username">UserName</label>
-            <ValidationMessage For="() => Input.Email" class="text-danger" />
+            <ValidationMessage For="() => Input.UserName" class="text-danger" />
         </div>
         <div class="form-floating mb-3">
             <InputText @bind-Value="Input.Email" class="form-control" />
@@ -64,7 +63,7 @@
     [SupplyParameterFromForm]
     private InputModel Input { get; set; } = new();
 
-    private string? Message => IdentityErrors is null ? null : $"Error: {string.Join(", ", IdentityErrors.Select(error => error.Description))}";
+    private string? ErrorMessage { get; set; }
 
     public async Task RegisterUser(EditContext editContext)
     {
@@ -75,7 +74,7 @@
         var result = await UserManager.CreateAsync(user, Input.Password);
         if (!result.Succeeded)
         {
-            IdentityErrors = result.Errors;
+            ErrorMessage = "Error: " + result.Errors.First().Description;
             return;
         }
         await SignInManager.SignInAsync(user, isPersistent: Input.RememberMe);
@@ -85,16 +84,18 @@
     private sealed class InputModel
     {
         [Required]
+        [Length(3, 25, ErrorMessage = "Username must be 3 to 25 characters")]
         public string UserName { get; set; } = "";
 
         [Required]
         [EmailAddress]
+        [Length(3, 55, ErrorMessage = "Email must be between 3 and 55 characters")]
         [Display(Name = "Email")]
         public string Email { get; set; } = "";
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
+        [Length(8, 35, ErrorMessage = "Password must be 8 to 35 characters")]
         [Display(Name = "Password")]
         public string Password { get; set; } = "";
 

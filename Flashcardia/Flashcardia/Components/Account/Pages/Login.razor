@@ -19,8 +19,6 @@
     <StatusMessage Message="@ErrorMessage" />
     <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login">
         <DataAnnotationsValidator />
-
-        <ValidationSummary class="text-danger" role="alert" />
         <div class="form-floating mb-3">
             <InputText @bind-Value="Input.UserName" class="form-control" />
             <label class="form-label">UserName</label>
@@ -74,15 +72,16 @@
         ApplicationUser? user = await UserManager.FindByNameAsync(Input.UserName);
         if (user is null)
         {
-            ErrorMessage = "incorrect user name";
+            ErrorMessage = "Error: username not in use";
             return;
         }
         SignInResult result = await SignInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, false);
         if (result.Succeeded == false)
         {
-            ErrorMessage = "incorrect password";
+            ErrorMessage = "Error: incorrect password";
             return;
         }
+        ErrorMessage = null;
         RedirectManager.RedirectTo("/");
 
     }
@@ -90,9 +89,11 @@
     private sealed class InputModel
     {
         [Required]
+        [Length(3, 25, ErrorMessage = "UserName must be 3 to 25 characters")]
         public string UserName { get; set; } = "";
 
         [Required]
+        [Length(8, 35, ErrorMessage = "Password must be 8 to 35 characters")]
         [DataType(DataType.Password)]
         public string Password { get; set; } = "";
 
